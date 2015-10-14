@@ -3,22 +3,18 @@ FractionOptimizer - calculate optimal LC conditions for fractionation and fracti
 
 Requirements
 ------------
-
- - Python 2.7
- 
- - matplotlib
- 
- - scipy
- 
- - pyteomics
- 
- - pyteomics.biolccc
+- Python 2.7
+- matplotlib
+- scipy
+- pyteomics
+- pyteomics.biolccc
 
 
 How to use
 ----------
+    
+``python FractionOptimizer.py parameters.cfg peptide_list.csv output_dir``
 
-    python FractionOptimizer.py parameters.cfg peptide_list.csv output_dir
 
 Format of peptide_list.csv
 ..........................
