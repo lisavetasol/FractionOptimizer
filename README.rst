@@ -1,6 +1,8 @@
 FractionOptimizer - calculate optimal LC conditions for fractionation and fraction analysis
 ===========================================================================================
 
+![Image](toc_fig.png)
+
 Requirements
 ------------
 - Python 2.7
