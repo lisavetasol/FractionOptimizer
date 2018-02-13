@@ -17,6 +17,8 @@ Config = ConfigParser.ConfigParser()
 Config.read(sys.argv[1])
 Config.sections()
 
+seaborn.set_style('whitegrid')
+
 #function for prediction the retation time of peptides in fractionation by BioLCCC
 def biolccc_func():
     frac=[]
@@ -38,11 +40,11 @@ def biolccc_func():
     percent_grad_fr_str=Config.get('BioLCCC', 'percent_grad_fr')
     percent_grad_fr=[float(x) for x in percent_grad_fr_str.split(',')]
     with open(sys.argv[2], 'rb') as fIn: 
-        reader = csv.reader(fIn, delimiter='\t')
+        reader = csv.DictReader(fIn, delimiter=',')
         next(reader)
         for row in reader:
-            frac.append(row[0])
-            dic_exp[row[0]]=row[6]
+            frac.append(row['sequence'])
+            dic_exp[row['sequence']]=row['RT exp']
     a=len(frac)
     myChromoConditions = biolccc.ChromoConditions()
     myChromoConditions.setColumnRelativeStrength(ColumnRelativeStrength)
@@ -98,7 +100,7 @@ def nonsorb():
 #test of the peptides distribution in optim. fractionation
 def test(RT_res):
  #   print stats.scoreatpercentile(RT_res, [20,80])
-    pylab.hist(RT_res, bins=np.arange(0,40,1),normed=0,alpha=0.3,facecolor='blue')
+    pylab.hist(RT_res, bins=np.arange(0,40,1),normed=0,alpha=0.3,facecolor='blue',edgecolor='black')
     pylab.xlim(0,40)
     pylab.xlabel('time,min')
     pylab.ylabel('amount of pep')
@@ -135,7 +137,7 @@ def optimizer():
     #correction (delay time,nonsorb.component, etc.)
     time_fraction_change=[]
     pylab.rcParams['font.family'] = 'DejaVu Sans'
-    events, edges, patches = pylab.hist(RT_res,time_fraction,normed=0,facecolor='blue', alpha=0.5)
+    events, edges, patches = pylab.hist(RT_res,time_fraction,normed=0,facecolor='blue', alpha=0.5, edgecolor='black')
     pylab.xlabel('t,min')
     pylab.ylabel('amount of peptides')
     pylab.title('Time for collection of the fractions')
@@ -172,8 +174,10 @@ def pep_distr(RT_res,time_fraction):
         for pep in peptides[number_frac==i+1]:
             RT_fr.append(float(dic_exp[str(pep)]))
         pylab.subplot(2,3,i+1)    
-        pylab.hist(RT_fr, bins=np.arange(0,300,10),normed=0,alpha=0.3,facecolor='blue')
+        pylab.hist(RT_fr, bins=np.arange(0,max(RT_fr),10),normed=0,alpha=0.3,facecolor='blue')
         pylab.title('fraction%d'%(i+1))
+        pylab.xlabel('time,min')
+        pylab.ylabel('amount of pep')
         pylab.xlim(0,300)
         t1 = percent_acn*grad(stats.scoreatpercentile(RT_fr, [5])[0]-delay_time_analytical)
         t2 = percent_acn*grad(stats.scoreatpercentile(RT_fr, [95])[0]-delay_time_analytical)
@@ -233,12 +237,11 @@ def grad_for_frac(error):
         pylab.ylabel('percent_ACN')
         pylab.savefig('%s/analytical_grad_for_fractions.jpg'%sys.argv[3])
 
-
-if __name__ == '__main__':
-    dic_exp,frac,RT_res,peptides_theor,dic_theor,myChromoConditions=biolccc_func()
-    time_nonsorb_biolccc=nonsorb()
-    test(RT_res)
-    time_fraction=optimizer()
-    percent_ACN=pep_distr(RT_res,time_fraction)
-    grad_for_frac(10)
-    print ('Enjoy your optimal fractions!')
+dic_exp,frac,RT_res,peptides_theor,dic_theor,myChromoConditions=biolccc_func()
+time_nonsorb_biolccc=nonsorb()
+test(RT_res)
+time_fraction=optimizer()
+print ('optimization in the process')
+percent_ACN=pep_distr(RT_res,time_fraction)
+grad_for_frac(10)
+print ('enjoy your optimal fractions')
