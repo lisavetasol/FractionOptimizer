@@ -24,14 +24,14 @@ Peptide list
 “peptide_list” is a list of identified peptides from the preliminary experiment.  
 Only two columns called “sequence” and “RT exp” are required. However, it may contain any others. 
 The peptide list should be in tab delimited format. 
-Post-validation algorithm `MPscore <https://bitbucket.org/markmipt/mp-score>`_ generates the list in the required format.
+Post-validation algorithm [MPscore](<https://bitbucket.org/markmipt/mp-score>) generates the list in the required format.
 
 Parameters
 ----------
 
 The configuration file contains all parameters related to analysis, LC system and preliminary experiment,
 such as the desired number of fractions, delay times, etc. 
-his file should be in cfg format, the example can be found `here <https://bitbucket.org/levitsky/fractionoptimizer/src/tip/example_list_peptides.csv>`_. 
+his file should be in cfg format, the example can be found [here](<https://bitbucket.org/levitsky/fractionoptimizer/src/tip/example_list_peptides.csv>). 
 The approaches for measuring all these parameters are discussed in detail in supporting information. 
 
 Output 
@@ -39,7 +39,7 @@ Output
 
 The program has two steps of optimization:
 
-1.In silico optimization of peptide distribution between the fractions. 
+ 1. In silico optimization of peptide distribution between the fractions. 
 
    There are 3 files related to this stage, the first one is called “optimal_fractions.txt” and contains start time and duration of the fraction collection, 
    as well as the predicted amount of peptides in each fraction. 
@@ -48,7 +48,7 @@ The program has two steps of optimization:
    Since the program calculates the optimal times for fraction collection in the standard gradient, it can be used for checking of this gradient. 
    If the distribution is not normal, the standard gradient should be modified (parameter “gradient used for fractionation analysis” in the configuration file).  
     
-2.Calculation of fraction-specific separation conditions in the subsequent LC-MS/MS analysis. 
+ 2. Calculation of fraction-specific separation conditions in the subsequent LC-MS/MS analysis. 
 
    There are 3 files related to this stage, the first one is called “analytical_grad_for_fractions.txt” and contains the gradients for analysis of each fraction.
    In this file there are only percentages of phase B (default 100% ACN), the time points are the same for all fractions, 
@@ -61,5 +61,5 @@ The program has two steps of optimization:
 
 Questions
 ---------
-- `Create an issue <https://bitbucket.org/levitsky/fractionoptimizer/issues>`_ with BitBucket.
+- [Create an issue](<https://bitbucket.org/levitsky/fractionoptimizer/issues>) with BitBucket.
 - Email us at pyteomics@googlegroups.com or biolccc@googlegroups.com.
