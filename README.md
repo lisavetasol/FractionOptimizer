@@ -61,5 +61,4 @@ The program has two steps of optimization:
 
 Questions
 ---------
-- [Create an issue](<https://bitbucket.org/levitsky/fractionoptimizer/issues>) with BitBucket.
 - Email us at pyteomics@googlegroups.com or biolccc@googlegroups.com.
